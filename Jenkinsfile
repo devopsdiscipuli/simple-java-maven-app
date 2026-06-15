@@ -16,6 +16,17 @@ pipeline{
                 credentialsId:'u6-java-project'
             }
         }
+        stage('Debug'){
+            steps{
+                sh '''
+                    whoami
+                    id
+                    echo $HOME
+                    ls -ld /root
+                    ls -ld /root/.m2
+                '''
+            }
+        }
         stage('Build'){
             steps{
                 sh 'mvn clean package'
