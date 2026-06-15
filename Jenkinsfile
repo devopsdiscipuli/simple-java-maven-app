@@ -19,7 +19,8 @@ pipeline{
         stage('Debug'){
             steps{
                 sh '''
-                    id -un
+                    cat /etc/passwd
+                    cat /etc/group
                     echo $HOME
                     ls -ld /root
                     ls -ld /root/.m2
