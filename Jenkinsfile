@@ -19,8 +19,7 @@ pipeline{
         stage('Debug'){
             steps{
                 sh '''
-                    whoami
-                    id
+                    id -un
                     echo $HOME
                     ls -ld /root
                     ls -ld /root/.m2
