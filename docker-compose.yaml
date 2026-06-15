@@ -1,0 +1,47 @@
+name: ${COMPOSE_PROJECT_NAME}
+
+services:
+  docker-daemon:
+    image: docker:dind
+    container_name: ${COMPOSE_PROJECT_NAME}-dind
+    privileged: true
+    environment:
+      - DOCKER_TLS_CERTDIR=/certs
+    volumes:
+      - jenkins-docker-certs:/certs/client
+      - jenkins-data:/var/jenkins_home
+    ports:
+      - "${DIND_PORT}:2376"
+    networks:
+      jenkins:
+        aliases:
+          - docker  # https://docker:2376
+    command: --storage-driver overlay2
+
+  jenkins-controller:
+    image: jenkins/jenkins:lts-jdk21
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ${COMPOSE_PROJECT_NAME}-jenkins-controller
+    restart: on-failure
+    environment:
+      - DOCKER_HOST=tcp://docker:2376
+      - DOCKER_CERT_PATH=/certs/client
+      - DOCKER_TLS_VERIFY=1
+    volumes:
+      - jenkins-docker-certs:/certs/client:ro
+      - jenkins-data:/var/jenkins_home
+    ports:
+      - "${JENKINS_PORT}:8080"
+      - "${AGENT_PORT}:50000"
+    networks:
+      - jenkins
+ 
+networks:
+  jenkins:
+    driver: bridge
+
+volumes:
+  jenkins-docker-certs:
+  jenkins-data:
