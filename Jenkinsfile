@@ -29,6 +29,8 @@ pipeline{
         stage('Build'){
             steps{
                 sh 'mvn -Dmaven.repo.local=.m2/repository clean package'
+                sh 'ls /var/jenkins_home/.m2'
+                sh 'ls /var/jenkins_home/.m2/repository'
             }
         }
         stage('Test'){
