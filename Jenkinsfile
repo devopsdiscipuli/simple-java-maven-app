@@ -24,6 +24,7 @@ pipeline{
                     echo $HOME
                     ls -ld /root
                     ls -ld /root/.m2
+                    sleep 10000
                 '''
             }
         }
