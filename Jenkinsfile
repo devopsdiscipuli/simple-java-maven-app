@@ -19,12 +19,12 @@ pipeline{
         stage('Debug'){
             steps{
                 sh '''
+                    sleep 10000
                     cat /etc/passwd
                     cat /etc/group
                     echo $HOME
                     ls -ld /root
                     ls -ld /root/.m2
-                    sleep 10000
                 '''
             }
         }
