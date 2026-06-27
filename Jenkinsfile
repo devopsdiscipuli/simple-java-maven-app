@@ -29,7 +29,7 @@ pipeline{
         stage('Build'){
             steps{
                 sh '''
-                    mvn -Dmaven.repo.local=.m2/repository clean package'
+                    mvn -Dmaven.repo.local=.m2/repository clean package
                     # ls /var/jenkins_home/.m2
                     # ls /var/jenkins_home/.m2/repository
                     sleep 5000
