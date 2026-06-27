@@ -2,12 +2,12 @@ pipeline{
     agent{
         docker{
             image 'maven:3.9.16-eclipse-temurin-21-alpine'
-            args '-v /var/jenkins_home:/var/jenkins_home'
+            args '-v /var/jenkins_home/.m2:/var/jenkins_home/.m2'
         }
     }
     environment{
         APP_NAME='sample-app'
-        //MAVEN_OPTS='-Dmaven.repo.local=/var/jenkins_home/.m2/repository'
+        MAVEN_OPTS='-Dmaven.repo.local=/var/jenkins_home/.m2/repository'
     }
     stages{
         stage(Checkout){
@@ -32,7 +32,7 @@ pipeline{
                     mvn -Dmaven.repo.local=.m2/repository clean package'
                     # ls /var/jenkins_home/.m2
                     # ls /var/jenkins_home/.m2/repository
-                    # sleep 5000
+                    sleep 5000
                 '''
             }
         }
